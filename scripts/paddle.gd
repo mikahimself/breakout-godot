@@ -1,16 +1,20 @@
 extends KinematicBody2D
 
-# Jos maila kasvaa -> tweenanimaatio ja vaihda sitten spriteä.
 export var speed = 50
 var velocity = Vector2()
 
+# Scenes & items
 var tween
 var sprite
 var collider
+var game_controller
 
+# Bools
 var tweendirection
 var tweenstart
 
+# Signalling
+signal ball_shot
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,6 +22,7 @@ func _ready():
 	tween = $paddle_tween
 	sprite = $paddle_sprite
 	collider = $paddle_collider
+	game_controller = get_parent().get_node("game_controller")
 	tweenstart = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -34,13 +39,18 @@ func get_controls(delta):
 		velocity.x = 1
 	else:
 		velocity.x = 0
-	
 	velocity = velocity.normalized() * speed
 
-	if (Input.is_key_pressed(KEY_SPACE) && tweenstart == false):
-		tweendirection = !tweendirection
-		tweenstart = true
-		change_size(tweendirection)
+	if (Input.is_key_pressed(KEY_SPACE)):
+		if game_controller.ball_state == 0 and game_controller.no_of_balls_in_play == 0:
+			emit_signal("ball_shot")
+
+	#if (Input.is_key_pressed(KEY_SPACE) && tweenstart == false):
+	#	tweendirection = !tweendirection
+	#	tweenstart = true
+	#	change_size(tweendirection)
+
+
 
 func change_size(change_to_big):
 	if (change_to_big):
