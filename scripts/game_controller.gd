@@ -6,17 +6,18 @@ extends Node2D
 # out of bounds 2
 
 var out_of_bounds_timer
-
 var ball_state
-
 var no_of_balls_in_play
-
 var ball
+var score
+var gamescreen
 
 func _ready():
 	ball = load("res://Scenes/ball.tscn")
 	no_of_balls_in_play = 0
 	ball_state = 0
+	score = 0
+	gamescreen = get_parent()
 	setup_timers()
 	init_ball()
 	
@@ -43,6 +44,12 @@ func _on_out_of_bounds_timeout():
 	ball_state = 0
 	init_ball()
 
+func _update_score(add_score):
+	score += add_score
+	gamescreen.set_brick_count(1)
+
 func init_ball():
 	var ball_node = ball.instance()
+	ball_node.connect("got_brick", self, "_update_score")
 	get_parent().call_deferred("add_child", ball_node)
+	
