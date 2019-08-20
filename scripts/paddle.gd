@@ -27,12 +27,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	get_controls(delta)
+	get_controls()
 
 func _physics_process(delta):
 	move_and_collide(velocity * delta)
 
-func get_controls(delta):
+func get_controls():
 	if (Input.is_key_pressed(KEY_LEFT)):
 		velocity.x = -1
 	elif (Input.is_key_pressed(KEY_RIGHT)):

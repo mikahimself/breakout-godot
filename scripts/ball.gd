@@ -4,6 +4,8 @@ var paddle
 var game_controller
 var paddle_width
 
+signal got_brick
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	paddle = get_parent().get_node("paddle")
@@ -23,6 +25,7 @@ func _physics_process(delta):
 		if bodies.size() > 0:
 			for body in bodies:
 				if body.is_in_group("bricks"):
+					emit_signal("got_brick", body.get_score())
 					body.queue_free()
 	
 	elif (game_controller.ball_state == 0):
