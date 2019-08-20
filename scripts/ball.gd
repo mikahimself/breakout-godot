@@ -27,8 +27,6 @@ func _physics_process(delta):
 	
 	elif (game_controller.ball_state == 0):
 		position = Vector2(paddle.position.x + paddle_width / 2, paddle.position.y - 30)
-
-
 		
 func _on_paddle_ball_shot():
 	set_linear_velocity(Vector2(200, -200))
