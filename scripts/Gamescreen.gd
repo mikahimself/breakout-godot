@@ -10,9 +10,7 @@ var brick_h = 8
 var brick_scores = [0, 10, 15, 20, 25, 30, 35]
 var brick_count = 0 setget set_brick_count, get_brick_count
 
-#var ball
-#var paddle
-
+signal level_ready
 
 var brick_scene = preload("res://Scenes/brick.tscn")
 var level = [
@@ -30,10 +28,10 @@ var level = [
 		]
 
 func _ready():
-	create_level()
+	create_level(0)
 	setup_items()
 
-func create_level():
+func create_level(level_no):
 	for i in range(0, level.size()):
 		for j in range(0, level[i].size()):
 			if level[i][j] > 0:
@@ -46,6 +44,7 @@ func create_level():
 				# Add the brick to the scene to make it visible
 				get_tree().get_root().call_deferred("add_child", brick)
 				brick_count += 1
+	emit_signal("level_ready", brick_count)
 
 func get_brick_count():
 	return brick_count	

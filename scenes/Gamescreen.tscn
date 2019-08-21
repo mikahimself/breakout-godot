@@ -1,12 +1,25 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/Gamescreen.gd" type="Script" id=1]
 [ext_resource path="res://scenes/gamescreen_borders.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/paddle.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/game_controller.tscn" type="PackedScene" id=4]
+[ext_resource path="res://fonts/m5x7.ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 216.051, 32.0999 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+font_data = ExtResource( 5 )
 
 [node name="Gamescreen" type="Node2D"]
 script = ExtResource( 1 )
@@ -20,10 +33,44 @@ scale = Vector2( 1, 1 )
 [node name="game_controller" parent="." instance=ExtResource( 4 )]
 
 [node name="game_over_area" type="Area2D" parent="."]
+editor/display_folded = true
 position = Vector2( -1, 0 )
 
 [node name="game_over_area_shape" type="CollisionShape2D" parent="game_over_area"]
 position = Vector2( 216, 805.6 )
 shape = SubResource( 1 )
+
+[node name="textboxes" type="Node" parent="."]
+
+[node name="label_score" type="Label" parent="textboxes"]
+margin_left = 28.0
+margin_top = 40.0
+margin_right = 176.0
+margin_bottom = 66.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+text = "0"
+align = 2
+
+[node name="label_lives" type="Label" parent="textboxes"]
+margin_left = 216.0
+margin_top = 40.0
+margin_right = 289.0
+margin_bottom = 66.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+text = "03"
+align = 2
+
+[node name="label_level" type="Label" parent="textboxes"]
+margin_left = 327.0
+margin_top = 40.0
+margin_right = 403.0
+margin_bottom = 66.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+text = "01"
+align = 2
+[connection signal="level_ready" from="." to="game_controller" method="_on_Gamescreen_level_ready"]
 [connection signal="ball_shot" from="paddle" to="game_controller" method="_on_paddle_ball_shot"]
 [connection signal="body_entered" from="game_over_area" to="game_controller" method="_on_game_over_area_body_entered"]
