@@ -15,6 +15,7 @@ var gamescreen
 var score
 var lives
 var level
+var level_count
 var brick_count
 
 # Labels
@@ -22,16 +23,21 @@ var label_score
 var label_lives
 var label_level
 
+# Signals
+signal level_finished
+signal game_finished
+signal game_over
 
 
 func _ready():
-	ball = load("res://Scenes/ball.tscn")
+	ball = load("res://Scenes/ball_gamescreen.tscn")
 	
 	no_of_balls_in_play = 0
 	ball_state = 0
 	score = 0
 	lives = 3
-	level = 1
+	level = 0
+	level_count = get_parent().get_node("leveldata").levels.size()
 	gamescreen = get_parent()
 	setup_timers()
 	init_ball()
@@ -74,7 +80,7 @@ func _update_score(add_score):
 func _update_lives():
 	lives -= 1
 	if lives < 0:
-		print("game over")
+		emit_signal("game_over")
 		return false
 	else:
 		set_lives_string()
@@ -85,7 +91,8 @@ func _update_brick_count():
 	brick_count -= 1
 	print("Bricks left: ", brick_count)
 	if brick_count <= 0:
-		print("level finished")
+		on_level_complete()
+		
 
 func set_lives_string():
 	var lives_string = str(lives)
@@ -94,6 +101,14 @@ func set_lives_string():
 	else:
 		return "0" + lives_string
 
+func on_level_complete():
+	level += 1
+	if (level + 1) >= level_count:
+		emit_signal("game_finished")
+	else:
+		ball_state = 0
+		no_of_balls_in_play = 0
+		emit_signal("level_finished")
 
 func init_ball():
 	var ball_node = ball.instance()
