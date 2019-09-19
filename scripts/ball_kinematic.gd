@@ -49,7 +49,7 @@ func _physics_process(delta):
 				else:
 					velocity = direction.normalized() * min(velocity.length() + SPEEDUP, MAX_SPEED)
 
-				print(velocity.length())
+				# print(velocity.length())
 
 			else:
 				velocity = velocity.bounce(collision_info.normal)

@@ -42,6 +42,7 @@ func _ready():
 	setup_timers()
 	init_ball()
 	setup_labels()
+	print("Current Level: ", level, " | Total Levels: ", level_count)
 	
 
 func setup_timers():
@@ -103,11 +104,13 @@ func set_lives_string():
 
 func on_level_complete():
 	level += 1
-	if (level + 1) >= level_count:
+	if (level) >= level_count:
 		emit_signal("game_finished")
+		print("game finished")
 	else:
 		ball_state = 0
 		no_of_balls_in_play = 0
+		print("level finished")
 		emit_signal("level_finished")
 
 func init_ball():
