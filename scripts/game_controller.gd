@@ -6,6 +6,7 @@ extends Node2D
 # out of bounds 2
 
 var out_of_bounds_timer
+var level_finished_timer
 var ball_state
 var no_of_balls_in_play
 var ball
@@ -25,6 +26,7 @@ var label_level
 
 # Signals
 signal level_finished
+signal level_change
 signal game_finished
 signal game_over
 
@@ -50,7 +52,14 @@ func setup_timers():
 	out_of_bounds_timer.set_one_shot(true)
 	out_of_bounds_timer.set_wait_time(0.75)
 	out_of_bounds_timer.connect("timeout", self, "_on_out_of_bounds_timeout")
+
+	level_finished_timer = Timer.new()
+	level_finished_timer.set_one_shot(true)
+	level_finished_timer.set_wait_time(1.5)
+	level_finished_timer.connect("timeout", self, "_on_level_finished_timeout")
+
 	add_child(out_of_bounds_timer)
+	add_child(level_finished_timer)
 
 func setup_labels():
 	label_score = get_parent().get_node("textboxes").get_node("label_score")
@@ -72,6 +81,10 @@ func _on_out_of_bounds_timeout():
 	ball_state = 0
 	if _update_lives():
 		init_ball()
+
+func _on_level_finished_timeout():
+	print("level end timer finished")
+	emit_signal("level_change")
 
 func _update_score(add_score):
 	score += add_score
@@ -112,6 +125,7 @@ func on_level_complete():
 		no_of_balls_in_play = 0
 		print("level finished")
 		emit_signal("level_finished")
+		level_finished_timer.start()
 
 func init_ball():
 	var ball_node = ball.instance()

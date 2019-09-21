@@ -56,9 +56,9 @@ func setup_items():
 
 func _on_new_game_button_pressed():
 	$FadeIn.show()
-	$FadeIn.fade_out()
+	$FadeIn.fade_out(1)
 
 
-func _on_FadeIn_fade_finished():
+func _on_FadeIn_fade_finished(anim_name):
 	get_node("brick_container").queue_free()
 	get_tree().change_scene("res://scenes/Gamescreen.tscn")

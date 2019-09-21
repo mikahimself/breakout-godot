@@ -84,6 +84,9 @@ visible = false
 
 [node name="gamescreen_label" parent="." instance=ExtResource( 8 )]
 [connection signal="level_ready" from="." to="game_controller" method="_on_Gamescreen_level_ready"]
+[connection signal="ball_shot" from="paddle" to="." method="_on_paddle_ball_shot"]
 [connection signal="ball_shot" from="paddle" to="game_controller" method="_on_paddle_ball_shot"]
+[connection signal="level_change" from="game_controller" to="." method="_on_game_controller_level_change"]
 [connection signal="level_finished" from="game_controller" to="." method="_on_game_controller_level_finished"]
 [connection signal="body_entered" from="game_over_area" to="game_controller" method="_on_game_over_area_body_entered"]
+[connection signal="fade_finished" from="FadeIn" to="." method="_on_FadeIn_fade_finished"]

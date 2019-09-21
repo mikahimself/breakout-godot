@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/brick.gd" type="Script" id=1]
+[ext_resource path="res://scripts/brick.gd" type="Script" id=1]
 [ext_resource path="res://sprites/block_shadow.png" type="Texture" id=2]
 [ext_resource path="res://sprites/blocks.png" type="Texture" id=3]
 
