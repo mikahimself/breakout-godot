@@ -53,7 +53,7 @@ margin_top = 30.0
 margin_right = 176.0
 margin_bottom = 56.0
 custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+custom_colors/font_color = Color( 0.266667, 0.266667, 0.160784, 1 )
 text = "0"
 align = 2
 
@@ -63,7 +63,7 @@ margin_top = 30.0
 margin_right = 289.0
 margin_bottom = 56.0
 custom_fonts/font = SubResource( 3 )
-custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+custom_colors/font_color = Color( 0.266667, 0.266667, 0.160784, 1 )
 text = "03"
 align = 2
 
@@ -73,7 +73,7 @@ margin_top = 30.0
 margin_right = 403.0
 margin_bottom = 56.0
 custom_fonts/font = SubResource( 4 )
-custom_colors/font_color = Color( 0.0313726, 0.0941176, 0.12549, 1 )
+custom_colors/font_color = Color( 0.266667, 0.266667, 0.160784, 1 )
 text = "01"
 align = 2
 
