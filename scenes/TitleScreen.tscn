@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/TitleScreen.gd" type="Script" id=1]
 [ext_resource path="res://sprites/background.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://themes/breakout_theme.tres" type="Theme" id=4]
 [ext_resource path="res://fonts/m5x7.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://scenes/fade_in.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/gamescreen_label.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 203.483, 10 )
@@ -58,6 +59,7 @@ one_shot = true
 autostart = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+visible = false
 margin_left = 66.0
 margin_top = 400.0
 margin_right = 366.0
@@ -95,6 +97,10 @@ align = 1
 
 [node name="FadeIn" parent="." instance=ExtResource( 6 )]
 visible = false
+
+[node name="gamescreen_label" parent="." instance=ExtResource( 7 )]
+
+[node name="label_tween" type="Tween" parent="."]
 [connection signal="timeout" from="ball_timer" to="ball_kinematic" method="_on_ball_timer_timeout"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/new_game_button" to="." method="_on_new_game_button_pressed"]
 [connection signal="fade_finished" from="FadeIn" to="." method="_on_FadeIn_fade_finished"]

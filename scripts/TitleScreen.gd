@@ -8,6 +8,13 @@ var brick_scaled_h = 8
 var brick_w = 16
 var brick_h = 8
 
+var ts_label_main
+var ts_label_sub
+
+var tween
+var tween_start = 1
+var tween_end = 0
+
 signal title_ready
 
 var brick_scene = load("res://Scenes/brick.tscn")
@@ -49,16 +56,39 @@ func create_level(level_no):
 				# Add the brick to the scene to make it visible
 				get_node("brick_container").call_deferred("add_child", brick)
 	
+	$FadeIn.fade_in(1)
 	emit_signal("title_ready")
 
 func setup_items():
-	pass
+	tween = $label_tween
+	ts_label_main = $gamescreen_label.get_node("label_maintext")
+	ts_label_sub = $gamescreen_label.get_node("label_subtext")
+	ts_label_sub.set_text("Press Space to Start")
+	
+	tween.interpolate_property($gamescreen_label, "modulate", Color(1,1,1,tween_start), Color(1,1,1,tween_end), 1.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.connect("tween_completed", self, "_on_tween_completed")
+	tween.start()
+
+func _process(delta):
+	get_controls()
+	
+func get_controls():
+	if (Input.is_key_pressed(KEY_SPACE)):
+		$FadeIn.fade_out(1)
 
 func _on_new_game_button_pressed():
 	$FadeIn.show()
 	$FadeIn.fade_out(1)
 
+func _on_tween_completed(object, key):
+	var tmp = tween_start
+	tween_start = tween_end
+	tween_end = tmp
+	
+	tween.interpolate_property($gamescreen_label, "modulate", Color(1,1,1,tween_start), Color(1,1,1,tween_end), 1.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
 
 func _on_FadeIn_fade_finished(anim_name):
-	get_node("brick_container").queue_free()
-	get_tree().change_scene("res://scenes/Gamescreen.tscn")
+	if (anim_name == "Fade_Out"):
+		get_node("brick_container").queue_free()
+		get_tree().change_scene("res://scenes/Gamescreen.tscn")

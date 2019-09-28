@@ -4,6 +4,7 @@ extends Node2D
 # on paddle = 0
 # in play 1
 # out of bounds 2
+# game over 3
 
 var out_of_bounds_timer
 var level_finished_timer
@@ -65,6 +66,9 @@ func setup_labels():
 	label_score = get_parent().get_node("textboxes").get_node("label_score")
 	label_level = get_parent().get_node("textboxes").get_node("label_level")
 	label_lives = get_parent().get_node("textboxes").get_node("label_lives")
+	label_score.set_text(str(score))
+	label_level.set_text(set_lives_level_string(level + 1))
+	label_lives.set_text(set_lives_level_string(lives))
 
 func _on_paddle_ball_shot():
 	ball_state = 1
@@ -94,11 +98,11 @@ func _update_score(add_score):
 func _update_lives():
 	lives -= 1
 	if lives < 0:
+		ball_state = 3
 		emit_signal("game_over")
 		return false
 	else:
-		set_lives_string()
-		label_lives.set_text(set_lives_string())
+		label_lives.set_text(set_lives_level_string(lives))
 		return true
 
 func _update_brick_count():
@@ -108,16 +112,17 @@ func _update_brick_count():
 		on_level_complete()
 		
 
-func set_lives_string():
-	var lives_string = str(lives)
-	if len(lives_string) > 1:
-		return lives_string
+func set_lives_level_string(text_to_set):
+	var new_string = str(text_to_set)
+	if len(new_string) > 1:
+		return new_string
 	else:
-		return "0" + lives_string
+		return "0" + new_string
 
 func on_level_complete():
 	level += 1
 	if (level) >= level_count:
+		ball_state = 3
 		emit_signal("game_finished")
 		print("game finished")
 	else:
@@ -132,8 +137,7 @@ func init_ball():
 	ball_node.connect("got_brick", self, "_update_score")
 	get_parent().call_deferred("add_child", ball_node)
 	
-
 func _on_Gamescreen_level_ready(bricks):
 	brick_count = bricks
+	label_level.set_text(set_lives_level_string(level + 1))
 	print(brick_count)
-	

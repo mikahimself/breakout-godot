@@ -29,11 +29,18 @@ var levels
 var gs_label_main
 var gs_label_sub
 
+var is_level_finished
+var is_game_over
+var label_tween
+
 func _ready():
+	label_tween = $textboxes.get_node("label_tween")
 	setup_items()
 	create_level()
 
 func create_level():
+	is_level_finished = false
+	is_game_over = false
 	brick_count = 0
 	for i in range(0, level.size()):
 		for j in range(0, level[i].size()):
@@ -60,9 +67,9 @@ func setup_items():
 	level = levels[$game_controller.level]
 	gs_label_main = $gamescreen_label.get_node("label_maintext")
 	gs_label_sub = $gamescreen_label.get_node("label_subtext")
-	print("current level: ", level)
 
 func _on_game_controller_level_finished():
+	is_level_finished = true
 	show_label(txt_lvl_finished_main, txt_none)
 	for brick in get_node("brick_container").get_children():
 		brick.queue_free()
@@ -70,14 +77,17 @@ func _on_game_controller_level_finished():
 func _on_game_controller_level_change():
 	hide_label()
 	fade_screen()
+	yield($FadeIn.get_node("AnimationPlayer"), "animation_finished")
 	setup_items()
 	create_level()
 
 func _on_FadeIn_fade_finished(anim_name):
-	print("fade finished ", anim_name)
+	print("fade finished ", anim_name, " GameOver: ", is_game_over)
 	if anim_name == "Fade_In":
 		emit_signal("level_ready", brick_count)
 		show_label(txt_get_ready_main, txt_get_ready_sub)
+	if is_game_over:
+		get_tree().change_scene("res://scenes/TitleScreen.tscn")
 
 func _on_paddle_ball_shot():
 	hide_label()
@@ -85,17 +95,34 @@ func _on_paddle_ball_shot():
 func show_label(main_text, sub_text):
 	gs_label_main.set_text(main_text)
 	gs_label_sub.set_text(sub_text)
-	$gamescreen_label.show()
+	label_tween.interpolate_property($gamescreen_label, "modulate", Color(1,1,1,0), Color(1,1,1,1), 0.25, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	label_tween.start()
 
 func hide_label():
-	gs_label_main.set_text(txt_none)
-	gs_label_sub.set_text(txt_none)
-	$gamescreen_label.hide()
+	label_tween.interpolate_property($gamescreen_label, "modulate", Color(1,1,1,1), Color(1,1,1,0), 0.25, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	label_tween.start()
 
 func fade_screen():
 	$FadeIn.show()
-	$FadeIn.fade_out(0.5)
+	$FadeIn.fade_out(1)
 
 func show_screen():
 	$FadeIn.show()
-	$FadeIn.fade_in(0.5)
+	$FadeIn.fade_in(1)
+
+func _on_game_controller_game_over():
+	show_label(txt_game_over_main, txt_game_over_sub)
+	is_game_over = true
+
+func _on_game_over_area_body_entered(body):
+	# Don't show get ready label every time 
+	# the ball goes into the gutter.
+	show_label(txt_none, txt_none)
+
+func _on_paddle_trigger_scene_change():
+	hide_label()
+	fade_screen()
+
+func _on_game_controller_game_finished():
+	show_label(txt_congrats_main, txt_congrats_sub)
+	is_game_over = true

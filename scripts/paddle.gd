@@ -15,6 +15,7 @@ var tweenstart
 
 # Signalling
 signal ball_shot
+signal trigger_scene_change
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -44,6 +45,8 @@ func get_controls():
 	if (Input.is_key_pressed(KEY_SPACE)):
 		if game_controller.ball_state == 0 and game_controller.no_of_balls_in_play == 0:
 			emit_signal("ball_shot")
+		elif game_controller.ball_state == 3:
+			emit_signal("trigger_scene_change")
 
 	#if (Input.is_key_pressed(KEY_SPACE) && tweenstart == false):
 	#	tweendirection = !tweendirection

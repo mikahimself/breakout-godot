@@ -12,7 +12,6 @@ size = 32
 font_data = ExtResource( 2 )
 
 [node name="gamescreen_label" type="VBoxContainer"]
-visible = false
 margin_left = 66.0
 margin_top = 350.0
 margin_right = 366.0
