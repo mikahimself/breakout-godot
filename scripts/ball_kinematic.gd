@@ -6,7 +6,7 @@ var paddle_width
 var anchor_point_y = 10
 
 # Movement
-const SPEEDUP = 10
+const SPEEDUP = 2
 const MAX_SPEED = 400
 
 var speed = 0

@@ -166,3 +166,7 @@ func _on_Gamescreen_level_ready(bricks):
 func _on_paddle_trigger_scene_change():
 	$audioplayer.stream = snd_wall_hit
 	$audioplayer.play()
+
+
+func _on_paddle_trigger_level_change():
+	on_level_complete()

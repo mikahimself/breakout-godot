@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-export var speed = 50
+export var speed = 300
 var velocity = Vector2()
 
 # Scenes & items
@@ -17,10 +17,11 @@ var level_ready
 # Signalling
 signal ball_shot
 signal trigger_scene_change
+signal trigger_level_change
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	position = Vector2(216,  700)
+	position = Vector2(384, 400)
 	tween = $paddle_tween
 	sprite = $paddle_sprite
 	collider = $paddle_collider
@@ -49,7 +50,8 @@ func get_controls():
 				emit_signal("ball_shot")
 			elif game_controller.ball_state == 3:
 				emit_signal("trigger_scene_change")
-
+		if (Input.is_key_pressed(KEY_T)):
+			emit_signal("trigger_level_change")
 	#if (Input.is_key_pressed(KEY_SPACE) && tweenstart == false):
 	#	tweendirection = !tweendirection
 	#	tweenstart = true

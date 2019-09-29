@@ -10,8 +10,8 @@ var txt_congrats_main = "CONGRATULATIONS"
 var txt_congrats_sub = "You Beat the Final Level!\nPress Space to Continue"
 var txt_none = ""
 
-var side_buffer = 40
-var top_buffer = 128
+var side_buffer = 48
+var top_buffer = 112
 
 var brick_scaled_w = 32
 var brick_scaled_h = 16

@@ -1,11 +1,13 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://sprites/background.png" type="Texture" id=1]
+[ext_resource path="res://sprites/background-landscape.png" type="Texture" id=1]
 
 [node name="gamescreen_border" type="StaticBody2D"]
 
 [node name="border_collider" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( 432, 0, 432, 768, 410, 768, 410, 98, 23, 98, 23, 768, 0, 768, 0, 0 )
+position = Vector2( 150.187, 83.4375 )
+scale = Vector2( 1.15885, 0.349121 )
+polygon = PoolVector2Array( 533.124, -12.7105, 533.124, 998.4, 513.276, 998.4, 513.276, 38.8476, -109.753, 38.8476, -109.753, 998.4, -129.6, 998.4, -129.6, -12.7105 )
 
 [node name="border_image" type="Sprite" parent="."]
 texture = ExtResource( 1 )
