@@ -13,33 +13,15 @@ var ts_label_sub
 
 var tween
 var tween_start = 1
-var tween_end = 0
+var tween_end = 0.1
 
 signal title_ready
 
 var brick_scene = load("res://Scenes/brick.tscn")
-var level = [
-			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			[0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			[0,2,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			[0,2,0,0,2,0,4,4,0,0,4,4,4,0,0,4,0,0,4,0,4],
-			[0,2,2,2,0,0,4,0,4,0,4,0,0,0,4,0,4,0,4,0,4],
-			[0,2,0,0,2,0,4,0,4,0,4,4,0,0,4,0,4,0,4,4,0],
-			[0,2,0,0,2,0,4,4,0,0,4,0,0,0,4,4,4,0,4,0,4],
-			[0,2,0,0,2,0,4,0,4,0,4,0,0,0,4,0,4,0,4,0,4],
-			[0,2,2,2,0,0,4,0,4,0,4,4,4,0,4,0,4,0,4,0,4],
-			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			[0,0,0,0,0,0,4,4,4,0,4,0,4,0,4,4,4,0,0,0,0],
-			[0,0,0,0,0,0,4,0,4,0,4,0,4,0,0,4,0,0,0,0,0],
-			[0,0,0,0,0,0,4,0,4,0,4,0,4,0,0,4,0,0,0,0,0],
-			[0,0,0,0,0,0,4,0,4,0,4,0,4,0,0,4,0,0,0,0,0],
-			[0,0,0,0,0,0,4,0,4,0,4,0,4,0,0,4,0,0,0,0,0],
-			[0,0,0,0,0,0,4,4,4,0,4,4,4,0,0,4,0,0,0,0,0],
-		]
+var level
 
 func _ready():
+	level = $leveldata.title
 	create_level(0)
 	setup_items()
 
@@ -65,7 +47,7 @@ func setup_items():
 	ts_label_sub = $gamescreen_label.get_node("label_subtext")
 	ts_label_sub.set_text("Press Space to Start")
 	
-	tween.interpolate_property($gamescreen_label, "modulate", Color(1,1,1,tween_start), Color(1,1,1,tween_end), 1.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.interpolate_property($gamescreen_label, "modulate", Color(1,1,1,tween_start), Color(1,1,1,tween_end), 1.25, Tween.TRANS_LINEAR, Tween.EASE_OUT_IN)
 	tween.connect("tween_completed", self, "_on_tween_completed")
 	tween.start()
 
@@ -85,7 +67,7 @@ func _on_tween_completed(object, key):
 	tween_start = tween_end
 	tween_end = tmp
 	
-	tween.interpolate_property($gamescreen_label, "modulate", Color(1,1,1,tween_start), Color(1,1,1,tween_end), 1.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.interpolate_property($gamescreen_label, "modulate", Color(1,1,1,tween_start), Color(1,1,1,tween_end), 1.25, Tween.TRANS_LINEAR, Tween.EASE_OUT_IN)
 	tween.start()
 
 func _on_FadeIn_fade_finished(anim_name):
