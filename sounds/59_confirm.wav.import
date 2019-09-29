@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/77_arrowbounce.wav-8daeea5b2e5d4b0d6f1eef40cc005822.sample"
+path="res://.import/59_confirm.wav-6d3447b3c6f4756da77d87f2db523082.sample"
 
 [deps]
 
-source_file="res://sounds/77_arrowbounce.wav"
-dest_files=[ "res://.import/77_arrowbounce.wav-8daeea5b2e5d4b0d6f1eef40cc005822.sample" ]
+source_file="res://sounds/59_confirm.wav"
+dest_files=[ "res://.import/59_confirm.wav-6d3447b3c6f4756da77d87f2db523082.sample" ]
 
 [params]
 

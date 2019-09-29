@@ -5,3 +5,6 @@
 
 [node name="ball_kinematic" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+
+[node name="audioplayer" type="AudioStreamPlayer" parent="." index="3"]
+volume_db = -10.0

@@ -82,7 +82,6 @@ func _on_game_controller_level_change():
 	create_level()
 
 func _on_FadeIn_fade_finished(anim_name):
-	print("fade finished ", anim_name, " GameOver: ", is_game_over)
 	if anim_name == "Fade_In":
 		emit_signal("level_ready", brick_count)
 		show_label(txt_get_ready_main, txt_get_ready_sub)

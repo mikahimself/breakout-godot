@@ -35,6 +35,9 @@ scale = Vector2( 1, 1 )
 
 [node name="game_controller" parent="." instance=ExtResource( 4 )]
 
+[node name="audioplayer" type="AudioStreamPlayer" parent="game_controller"]
+volume_db = -10.0
+
 [node name="game_over_area" type="Area2D" parent="."]
 editor/display_folded = true
 position = Vector2( -1, 0 )
@@ -85,13 +88,16 @@ visible = false
 [node name="leveldata" parent="." instance=ExtResource( 7 )]
 
 [node name="gamescreen_label" parent="." instance=ExtResource( 8 )]
+[connection signal="level_ready" from="." to="paddle" method="_on_Gamescreen_level_ready"]
 [connection signal="level_ready" from="." to="game_controller" method="_on_Gamescreen_level_ready"]
 [connection signal="ball_shot" from="paddle" to="." method="_on_paddle_ball_shot"]
 [connection signal="ball_shot" from="paddle" to="game_controller" method="_on_paddle_ball_shot"]
 [connection signal="trigger_scene_change" from="paddle" to="." method="_on_paddle_trigger_scene_change"]
+[connection signal="trigger_scene_change" from="paddle" to="game_controller" method="_on_paddle_trigger_scene_change"]
 [connection signal="game_finished" from="game_controller" to="." method="_on_game_controller_game_finished"]
 [connection signal="game_over" from="game_controller" to="." method="_on_game_controller_game_over"]
 [connection signal="level_change" from="game_controller" to="." method="_on_game_controller_level_change"]
+[connection signal="level_finished" from="game_controller" to="paddle" method="_on_game_controller_level_finished"]
 [connection signal="level_finished" from="game_controller" to="." method="_on_game_controller_level_finished"]
 [connection signal="body_entered" from="game_over_area" to="." method="_on_game_over_area_body_entered"]
 [connection signal="body_entered" from="game_over_area" to="game_controller" method="_on_game_over_area_body_entered"]

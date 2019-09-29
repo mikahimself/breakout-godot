@@ -12,6 +12,7 @@ var game_controller
 # Bools
 var tweendirection
 var tweenstart
+var level_ready
 
 # Signalling
 signal ball_shot
@@ -34,26 +35,25 @@ func _physics_process(delta):
 	move_and_collide(velocity * delta)
 
 func get_controls():
-	if (Input.is_key_pressed(KEY_LEFT)):
-		velocity.x = -1
-	elif (Input.is_key_pressed(KEY_RIGHT)):
-		velocity.x = 1
-	else:
-		velocity.x = 0
-	velocity = velocity.normalized() * speed
+	if level_ready:
+		if (Input.is_key_pressed(KEY_LEFT)):
+			velocity.x = -1
+		elif (Input.is_key_pressed(KEY_RIGHT)):
+			velocity.x = 1
+		else:
+			velocity.x = 0
+		velocity = velocity.normalized() * speed
 
-	if (Input.is_key_pressed(KEY_SPACE)):
-		if game_controller.ball_state == 0 and game_controller.no_of_balls_in_play == 0:
-			emit_signal("ball_shot")
-		elif game_controller.ball_state == 3:
-			emit_signal("trigger_scene_change")
+		if (Input.is_key_pressed(KEY_SPACE)):
+			if game_controller.ball_state == 0 and game_controller.no_of_balls_in_play == 0:
+				emit_signal("ball_shot")
+			elif game_controller.ball_state == 3:
+				emit_signal("trigger_scene_change")
 
 	#if (Input.is_key_pressed(KEY_SPACE) && tweenstart == false):
 	#	tweendirection = !tweendirection
 	#	tweenstart = true
 	#	change_size(tweendirection)
-
-
 
 func change_size(change_to_big):
 	if (change_to_big):
@@ -65,11 +65,6 @@ func change_size(change_to_big):
 		tween.connect("tween_completed", self, "_on_scale_complete", [], CONNECT_ONESHOT)
 		tween.start()
 
-
-func _on_scale_complete(obj, key):
-	swap_sprite()
-	tweenstart = false
-
 func swap_sprite():
 	if (tweendirection):
 		sprite.set_frame(1)
@@ -79,3 +74,13 @@ func swap_sprite():
 		sprite.set_frame(0)
 		sprite.scale = Vector2(2,2)
 		collider.scale = Vector2(1, 1)
+
+func _on_scale_complete(obj, key):
+	swap_sprite()
+	tweenstart = false
+
+func _on_Gamescreen_level_ready(bricks):
+	level_ready = true
+
+func _on_game_controller_level_finished():
+	level_ready = false

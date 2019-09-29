@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scripts/TitleScreen.gd" type="Script" id=1]
 [ext_resource path="res://scenes/leveldata.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://fonts/m5x7.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://scenes/fade_in.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/gamescreen_label.tscn" type="PackedScene" id=8]
+[ext_resource path="res://sounds/59_confirm.wav" type="AudioStream" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 203.483, 10 )
@@ -105,6 +106,10 @@ visible = false
 [node name="gamescreen_label" parent="." instance=ExtResource( 8 )]
 
 [node name="label_tween" type="Tween" parent="."]
+
+[node name="audioplayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -25.0
 [connection signal="timeout" from="ball_timer" to="ball_kinematic" method="_on_ball_timer_timeout"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/new_game_button" to="." method="_on_new_game_button_pressed"]
 [connection signal="fade_finished" from="FadeIn" to="." method="_on_FadeIn_fade_finished"]

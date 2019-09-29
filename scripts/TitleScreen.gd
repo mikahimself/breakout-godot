@@ -56,6 +56,7 @@ func _process(delta):
 	
 func get_controls():
 	if (Input.is_key_pressed(KEY_SPACE)):
+		$audioplayer.play()
 		$FadeIn.fade_out(1)
 
 func _on_new_game_button_pressed():
