@@ -17,7 +17,7 @@ var tween_end = 0.1
 
 signal title_ready
 
-var brick_scene = load("res://Scenes/brick.tscn")
+var brick_scene = load("res://scenes/brick.tscn")
 var level
 
 func _ready():

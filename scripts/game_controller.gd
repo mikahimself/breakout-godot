@@ -41,12 +41,12 @@ signal game_over
 
 
 func _ready():
-	ball = load("res://Scenes/ball_gamescreen.tscn")
+	ball = load("res://scenes/ball_gamescreen.tscn")
 	
 	no_of_balls_in_play = 0
 	ball_state = 0
 	score = 0
-	lives = 1
+	lives = 3
 	level = 0
 	level_count = get_parent().get_node("leveldata").levels.size()
 	gamescreen = get_parent()

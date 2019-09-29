@@ -22,7 +22,7 @@ var brick_count = 0 setget set_brick_count, get_brick_count
 
 signal level_ready
 
-var brick_scene = load("res://Scenes/brick.tscn")
+var brick_scene = load("res://scenes/brick.tscn")
 var level
 var levels
 
