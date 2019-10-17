@@ -6,6 +6,7 @@ var txt_game_over_sub = "Press Space to Continue"
 var txt_lvl_finished_main = "LEVEL FINISHED"
 var txt_get_ready_main = "GET READY"
 var txt_get_ready_sub = "Press Space to Start"
+var txt_get_ready_sub_first = "Press Space to Start\nUse Arrow Keys to Control Paddle"
 var txt_congrats_main = "CONGRATULATIONS"
 var txt_congrats_sub = "You Beat the Final Level!\nPress Space to Continue"
 var txt_none = ""
@@ -84,7 +85,10 @@ func _on_game_controller_level_change():
 func _on_FadeIn_fade_finished(anim_name):
 	if anim_name == "Fade_In":
 		emit_signal("level_ready", brick_count)
-		show_label(txt_get_ready_main, txt_get_ready_sub)
+		if $game_controller.level < 1:
+			show_label(txt_get_ready_main, txt_get_ready_sub_first)
+		else:
+			show_label(txt_get_ready_main, txt_get_ready_sub)
 	if is_game_over:
 		get_tree().change_scene("res://scenes/TitleScreen.tscn")
 
